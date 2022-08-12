@@ -23,6 +23,8 @@
   </div>
 </template>
 
+//First Skillbox study project 
+
 <script>
 export default {
   name: 'App',
