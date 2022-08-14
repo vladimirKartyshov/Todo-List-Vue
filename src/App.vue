@@ -3,31 +3,37 @@
     <h1>Список задач</h1>
     <div>Осталось сделать задач: <span class="counter">2</span></div>
     <div class="list">
-      <div class="item done">
+      <div class="item" v-for="(task, index) in tasks" :key="index">
         <input type="checkbox" checked />
-        Развернуть окружение в Codepen
+        {{ task }}
       </div>
-      <div class="item">
-        <input type="checkbox" />
-        Пройти курс по Vue
-      </div>
-      <div class="item">
-        <input type="checkbox" />
-        Сделать интернет-магазин на Vue
+      <div class="item-done" v-for="(task, index) in tasks2" :key="index">
+        <input type="checkbox" checked />
+        {{ task }}
       </div>
     </div>
     <div class="form">
-      <input />
-      <button type="button">Добавить</button>
+      <input :placeholder="message" />
+      <button type="button" :disabled="isSubmitting">Добавить</button>
     </div>
   </div>
 </template>
 
-//First Skillbox study project 
-
 <script>
 export default {
   name: 'App',
+  data() {
+    return {
+      message: 'Hello vue',
+      isSubmitting: true,
+      tasks: [
+        'Развернуть окружение в Codepen',
+        'Пройти курс по Vue',
+        'Сделать интернет-магазин на Vue',
+      ],
+      tasks2: ['Начал курс vue skillbox', 'Купил пива', 'Покормил кота'],
+    }
+  },
 }
 </script>
 
@@ -48,8 +54,9 @@ export default {
 .item {
   margin: 10px 0;
 }
-.done {
+.item-done {
   text-decoration: line-through;
+  padding-top: 10px;
 }
 .form {
   margin: 20px 0;
