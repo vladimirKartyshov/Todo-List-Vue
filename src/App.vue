@@ -32,7 +32,7 @@
         Добавить
       </button>
     </div>
-    <transition name="anm">
+    <transition name="bounce">
       <img
         class="image"
         src="https://images.unsplash.com/photo-1509479200622-4503f27f12ef?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80"
@@ -102,20 +102,16 @@ export default {
 .image {
   width: 500px;
 }
-.anm-enter {
+/* .anm-enter {
   opacity: 0;
 }
 .anm-enter-active {
+  animation: 3s anm-slide ;
   transition: opacity 8s;
 }
-/* .anm-enter-to {
-  animation: 3s anm-slide;
-} */
-/* .anm-leave {
-  animation: 3s anm-slide backwards;
-} */
+
 .anm-leave-active {
-  animation: 3s anm-slide forwards;
+  animation: 3s anm-slide ;
   transition: opacity 1s;
 }
 .anm-leave-to {
@@ -128,5 +124,30 @@ export default {
   to {
     transform: translateX(-100px);
   }
+} */
+.bounce-enter-active {
+  animation: bounce-in .5s;
 }
+
+.bounce-leave-active {
+  animation: bounce-in .5s reverse;
+}
+
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+    rotate: 0deg;
+  }
+
+  50% {
+    transform: scale(1.5);
+    rotate: 45deg;
+  }
+
+  100% {
+    transform: scale(1);
+    rotate: -45deg;
+  }
+}
+
 </style>
