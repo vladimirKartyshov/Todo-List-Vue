@@ -1,6 +1,10 @@
 <template>
   <div id="app">
-    <h1 @mouseover="onHover">Список задач</h1>
+    <div class="lkbtn">
+      <h1 @mouseover="onHover2">Список задач</h1>
+      <app-like-button></app-like-button>
+    </div>
+
     <div v-if="count() == 0">Job well done</div>
     <div v-else-if="count() == 1">Осталась всего одна задача</div>
     <div v-else>
@@ -8,13 +12,14 @@
     </div>
     <div class="list">
       <div
-        class="item"
+        class="item lkbtn"
         :class="{done: task.done}"
         v-for="(task, index) in tasks"
         :key="index"
       >
         <input type="checkbox" v-model="task.done" />
         {{ task.text }}
+        <app-like-button></app-like-button>
       </div>
       <!-- <div
         class="item"
@@ -26,11 +31,12 @@
         {{ task.text }}
       </div> -->
     </div>
-    <div class="form">
-      <input @mouseover="onHover" v-model="message" @keydown.enter="addTask" />
+    <div class="form lkbtn">
+      <input @mouseover="onHover2" v-model="message" @keydown.enter="addTask" />
       <button type="button" @click="addTask" :disabled="isSubmitting">
         Добавить
       </button>
+      <app-like-button></app-like-button>
     </div>
     <transition name="bounce">
       <img
@@ -43,8 +49,12 @@
 </template>
 
 <script>
+import AppLikeButton from './components/LikeButton.vue'
 export default {
   name: 'App',
+  components: {
+    AppLikeButton,
+  },
   data() {
     return {
       message: 'Hello vue',
@@ -69,8 +79,8 @@ export default {
     count() {
       return this.tasks.filter((task) => !task.done).length
     },
-    onHover: function (e) {
-      e.target.style.color = 'red'
+    onHover2: function (e) {
+      e.target.style.color = 'green'
     },
   },
 }
@@ -84,11 +94,15 @@ export default {
   align-items: center;
   height: 100vh;
 }
+.lkbtn {
+  display: flex;
+  align-items: center;
+}
 .list {
   padding: 20px;
   border: 1px solid #ccc;
   margin: 20px 0;
-  width: 300px;
+  width: 400px;
 }
 .item {
   margin: 10px 0;
@@ -126,11 +140,11 @@ export default {
   }
 } */
 .bounce-enter-active {
-  animation: bounce-in .5s;
+  animation: bounce-in 0.5s;
 }
 
 .bounce-leave-active {
-  animation: bounce-in .5s reverse;
+  animation: bounce-in 0.5s reverse;
 }
 
 @keyframes bounce-in {
@@ -149,5 +163,4 @@ export default {
     rotate: -45deg;
   }
 }
-
 </style>
