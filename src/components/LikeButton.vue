@@ -1,4 +1,4 @@
-<template> // исправлен коммит в git , для удобства проверки
+<template> 
   <div class="container">
     <div>
       <button class="ml" @mouseover="onHover" type="button" @click="counter++">
