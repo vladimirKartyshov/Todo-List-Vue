@@ -10,34 +10,22 @@
     <div v-else>
       Осталось сделать задач: <span class="counter">{{ count() }}</span>
     </div>
-    <div class="list">
-      <div
-        class="item lkbtn"
-        :class="{done: task.done}"
-        v-for="(task, index) in tasks"
-        :key="index"
-      >
-        <input type="checkbox" v-model="task.done" />
-        {{ task.text }}
-        <app-like-button></app-like-button>
-      </div>
-      <!-- <div
-        class="item"
-        :class="{done: task.done}"
-        v-for="(task, index) in tasks2"
-        :key="index"
-      >
-        <input type="checkbox" v-model="task.done" />
-        {{ task.text }}
-      </div> -->
-    </div>
+
+    <app-task-list :tasks="uncompletedTasks()"> </app-task-list>
+
     <div class="form lkbtn">
       <input @mouseover="onHover2" v-model="message" @keydown.enter="addTask" />
-      <button type="button" @click="addTask" :disabled="isSubmitting">
+      <button
+        type="button"
+        @click="addTask"
+        :disabled="isSubmitting"
+        v-if="countMessage <= 30"
+      >
         Добавить
       </button>
       <app-like-button></app-like-button>
     </div>
+
     <transition name="bounce">
       <img
         class="image"
@@ -45,31 +33,39 @@
         v-show="count() == 0"
       />
     </transition>
+
+    <div>
+      <app-task-list :tasks="completedTasks()" :title="title"></app-task-list>
+    </div>
   </div>
 </template>
 
 <script>
 import AppLikeButton from './components/LikeButton.vue'
+import AppTaskList from './components/TaskList.vue'
+
 export default {
   name: 'App',
   components: {
     AppLikeButton,
+    AppTaskList,
   },
   data() {
     return {
+      title: 'Заверешенные задачи',
       message: 'Hello vue',
       isSubmitting: false,
       tasks: [
-        {text: 'Развернуть окружение в Codepen', done: true},
-        {text: 'Пройти курс по Vue', done: false},
+        {text: 'Развернуть окружение в Codepen', done: false},
+        {text: 'Пройти курс по Vue, Skilbox-schl', done: false},
         {text: 'Сделать интернет-магазин на Vue', done: false},
       ],
-      // tasks2: [
-      //   {text: 'Начал курс vue skillbox', done: false},
-      //   {text: 'Купил пива и креветки', done: true},
-      //   {text: 'Покормил кота', done: true},
-      // ],
     }
+  },
+  computed: {
+    countMessage() {
+      return this.message.length
+    },
   },
   methods: {
     addTask() {
@@ -81,6 +77,12 @@ export default {
     },
     onHover2: function (e) {
       e.target.style.color = 'green'
+    },
+    completedTasks() {
+      return this.tasks.filter((task) => task.done)
+    },
+    uncompletedTasks() {
+      return this.tasks.filter((task) => !task.done)
     },
   },
 }
@@ -98,15 +100,6 @@ export default {
   display: flex;
   align-items: center;
 }
-.list {
-  padding: 20px;
-  border: 1px solid #ccc;
-  margin: 20px 0;
-  width: 400px;
-}
-.item {
-  margin: 10px 0;
-}
 .done {
   text-decoration: line-through;
 }
@@ -116,29 +109,7 @@ export default {
 .image {
   width: 500px;
 }
-/* .anm-enter {
-  opacity: 0;
-}
-.anm-enter-active {
-  animation: 3s anm-slide ;
-  transition: opacity 8s;
-}
 
-.anm-leave-active {
-  animation: 3s anm-slide ;
-  transition: opacity 1s;
-}
-.anm-leave-to {
-  opacity: 0;
-}
-@keyframes anm-slide {
-  from {
-    transform: translateX(0px);
-  }
-  to {
-    transform: translateX(-100px);
-  }
-} */
 .bounce-enter-active {
   animation: bounce-in 0.5s;
 }
