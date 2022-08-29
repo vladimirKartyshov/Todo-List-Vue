@@ -11,7 +11,8 @@
       Осталось сделать задач: <span class="counter">{{ count() }}</span>
     </div>
 
-    <app-task-list :tasks="uncompletedTasks()"> </app-task-list>
+    <app-task-list :tasks="uncompletedTasks()" v-show="count() >= 1">
+    </app-task-list>
 
     <div class="form lkbtn">
       <input @mouseover="onHover2" v-model="message" @keydown.enter="addTask" />
