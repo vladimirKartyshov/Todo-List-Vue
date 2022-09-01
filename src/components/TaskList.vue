@@ -1,6 +1,6 @@
 <template>
   <div class="list">
-     <h2 class="h2">{{ title }}</h2>
+    <h2 class="h2">{{ title }}</h2>
     <div
       class="item lkbtn"
       :class="{done: task.done}"
@@ -9,7 +9,10 @@
     >
       <input type="checkbox" v-model="task.done" />
       {{ task.text }}
-      <app-like-button />
+      <app-like-button
+        v-model:counter="task.likes"
+        v-model:counter2="task.disLikes"
+      />
     </div>
   </div>
 </template>
@@ -45,7 +48,7 @@ export default {
   margin: 10px 0;
 }
 .h2 {
-    color: rgb(233, 81, 233);
-    text-align: center;
+  color: rgb(233, 81, 233);
+  text-align: center;
 }
 </style>
